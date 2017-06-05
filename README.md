@@ -24,7 +24,7 @@ Simply run
 
 *Getting a PC player's stats*
 
-    From pypubg import core
+    from pypubg import core
     api = core.PUBGAPI("your-api-key")
     api.player("akustic")
 
@@ -32,13 +32,13 @@ The data is returned to use as a python dictionary.
 
 *Getting stats for a play mode*
 
-    From pypubg import core
+    from pypubg import core
     api = core.PUBGAPI("your-api-key")
     api.player_mode_stats("akustic", game_mode="squad")
 
 *Getting skill rating for a play mode*
 
-    From pypubg import core
+    from pypubg import core
     api = core.PUBGAPI("your-api-key")
     api.player_skill("akustic", game_mode="solo")
 
