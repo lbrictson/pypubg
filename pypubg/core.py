@@ -29,19 +29,23 @@ class PUBGAPI:
         except BaseException as error:
             print('Unhandled exception: ' + str(error))
             raise
-    def player_mode_stats(self, player_handle, game_mode='solo'):
-        """Returns the stats for a particular mode of play,
-        accepts solo, duo and squad.  Will return both regional
-        and global stats.  Default gamemode is solo"""
+    def player_mode_stats(self, player_handle, game_mode='solo', game_region='as'):
+    """Returns the stats for a particular mode of play,
+    accepts solo, duo and squad.  Will return both regional
+    and global stats.  Default gamemode is solo
+    by Zac: Add parameter game_region to extract player stats by region directly
+    """
         if game_mode not in ['solo', 'duo', 'squad']:
             raise APIException("game_mode must be one of: solo, duo, squad")
+        if game_server not in ['as', 'na', 'agg']:
+            raise APIException("game_region must be one of: as, na, agg")
         try:
             url = self.pubg_url + player_handle
             response = requests.request("GET", url, headers=self.headers)
             data = json.loads(response.text)
             return_data = []
             for stat in data['Stats']:
-                if stat['Match'] == game_mode:
+                if stat['Match'] == game_mode and stat['Match'] == game_region:
                     return_data.append(stat)
             return return_data
         except BaseException as error:
