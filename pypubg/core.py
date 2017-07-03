@@ -45,7 +45,7 @@ class PUBGAPI:
             data = json.loads(response.text)
             return_data = []
             for stat in data['Stats']:
-                if stat['Match'] == game_mode and stat['Match'] == game_region:
+                if stat['Match'] == game_mode and stat['Region'] == game_region:
                     return_data.append(stat)
             return return_data
         except BaseException as error:
