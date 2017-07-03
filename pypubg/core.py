@@ -37,7 +37,7 @@ class PUBGAPI:
     """
         if game_mode not in ['solo', 'duo', 'squad']:
             raise APIException("game_mode must be one of: solo, duo, squad")
-        if game_server not in ['as', 'na', 'agg']:
+        if game_region not in ['as', 'na', 'agg']:
             raise APIException("game_region must be one of: as, na, agg")
         try:
             url = self.pubg_url + player_handle
@@ -45,7 +45,7 @@ class PUBGAPI:
             data = json.loads(response.text)
             return_data = []
             for stat in data['Stats']:
-                if stat['Match'] == game_mode and stat['Match'] == game_region:
+                if stat['Match'] == game_mode and stat['Region'] == game_region:
                     return_data.append(stat)
             return return_data
         except BaseException as error:
