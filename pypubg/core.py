@@ -37,8 +37,8 @@ class PUBGAPI:
     """
         if game_mode not in ['solo', 'duo', 'squad']:
             raise APIException("game_mode must be one of: solo, duo, squad")
-        if game_region not in ['as', 'na', 'agg']:
-            raise APIException("game_region must be one of: as, na, agg")
+        if game_region not in ['as', 'na', 'agg', 'sea']:
+            raise APIException("game_region must be one of: as, na, agg, sea")
         try:
             url = self.pubg_url + player_handle
             response = requests.request("GET", url, headers=self.headers)
