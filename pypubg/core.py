@@ -30,11 +30,11 @@ class PUBGAPI:
             print('Unhandled exception: ' + str(error))
             raise
     def player_mode_stats(self, player_handle, game_mode='solo', game_region='as'):
-    """Returns the stats for a particular mode of play,
-    accepts solo, duo and squad.  Will return both regional
-    and global stats.  Default gamemode is solo
-    by Zac: Add parameter game_region to extract player stats by region directly
-    """
+        """Returns the stats for a particular mode of play,
+        accepts solo, duo and squad.  Will return both regional
+        and global stats.  Default gamemode is solo
+        by Zac: Add parameter game_region to extract player stats by region directly
+        """
         if game_mode not in ['solo', 'duo', 'squad']:
             raise APIException("game_mode must be one of: solo, duo, squad")
         if game_region not in ['as', 'na', 'agg']:
