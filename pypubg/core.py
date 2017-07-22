@@ -16,6 +16,7 @@ class PUBGAPI:
         self.api_key = api_key
         self.platform = platform
         self.pubg_url = "https://pubgtracker.com/api/profile/{}/".format(self.platform)
+        self.pubg_url_steam = "https://pubgtracker.com/api/search?steamId={}/"
         self.headers = {
             'content-type': "application/json",
             'trn-api-key': api_key,
@@ -29,6 +30,17 @@ class PUBGAPI:
         except BaseException as error:
             print('Unhandled exception: ' + str(error))
             raise
+
+    def player_s(self, sid)       :
+        """Returns the full set of data on a player, no filtering"""
+        try:
+            url = self.pubg_url_steam.format(str(sid))
+            response = requests.request("GET", url, headers=self.headers)
+            return json.loads(response.text)
+        except BaseException as error:
+            print('Unhandled exception: ' + str(error))
+            raise
+
     def player_mode_stats(self, player_handle, game_mode='solo', game_region='as'):
         """Returns the stats for a particular mode of play,
         accepts solo, duo and squad.  Will return both regional
