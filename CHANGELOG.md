@@ -12,13 +12,12 @@ CHANGELOG
 -----
 8-2-2017
 
-Additional region added - Thanks @zoloc
-Ability to grab steam info for user - Thanks @mjdesrosiers
+- Additional region added - Thanks @zoloc
+- Ability to grab steam info for user - Thanks @mjdesrosiers
 
 
 0.0.5
 -----
 6-30-2017
 
-Added ability to select game region when getting stats - Thanks @zoloc
-ckerhub.
+- Added ability to select game region when getting stats - Thanks @zoloc
