@@ -73,13 +73,30 @@ class PUBGAPI:
             response = requests.request("GET", url, headers=self.headers)
             data = json.loads(response.text)
             player_stats = {}
-            return_data = []
             for stat in data['Stats']:
                 if stat['Match'] == game_mode:
                     for datas in stat['Stats']:
                         if datas['label'] == 'Rating':
                             player_stats[stat['Region']] = datas['value']
             return player_stats
+        except BaseException as error:
+            print('Unhandled exception: ' + str(error))
+            raise
+
+    def max_rating(self, player_handle):
+        """Returns the max rating of the player across all regions"""
+        try:
+            url = self.pubg_url + player_handle
+            response = requests.request("GET", url, headers=self.headers)
+            data = json.loads(response.text)
+            max_rating = 0.0
+            for stat in data['Stats']:
+                for datas in stat['Stats']:
+                    if datas['label'] == 'Rating':
+                        if float(datas['value']) > max_rating:
+                            max_rating = float(datas['value'])
+            
+            return max_rating
         except BaseException as error:
             print('Unhandled exception: ' + str(error))
             raise
