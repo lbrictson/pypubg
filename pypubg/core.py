@@ -31,7 +31,7 @@ class PUBGAPI:
             print('Unhandled exception: ' + str(error))
             raise
 
-    def player_s(self, sid)       :
+    def player_s(self, sid):
         """Returns the full set of data on a player, no filtering"""
         try:
             url = self.pubg_url_steam.format(str(sid))
@@ -83,19 +83,27 @@ class PUBGAPI:
             print('Unhandled exception: ' + str(error))
             raise
 
-    def max_rating(self, player_handle):
-        """Returns the max rating of the player across all regions"""
+    def max_rating(self, player_handle, season=None):
+        """Returns the max rating of the player across all regions
+        Default behavior shows max rating in current season, though a season can
+        be supplied, or 'All' for all time max rating """
         try:
             url = self.pubg_url + player_handle
             response = requests.request("GET", url, headers=self.headers)
             data = json.loads(response.text)
             max_rating = 0.0
+
+            # If no season is provided, use the current seaons
+            if season is None:
+                season = data['defaultSeason']
+
             for stat in data['Stats']:
-                for datas in stat['Stats']:
-                    if datas['label'] == 'Rating':
-                        if float(datas['value']) > max_rating:
-                            max_rating = float(datas['value'])
-            
+                if stat['Season'] == season or season == 'All':
+                    for datas in stat['Stats']:
+                        if datas['label'] == 'Rating':
+                            if float(datas['value']) > max_rating:
+                                max_rating = float(datas['value'])
+
             return max_rating
         except BaseException as error:
             print('Unhandled exception: ' + str(error))
