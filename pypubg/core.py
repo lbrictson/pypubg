@@ -3,7 +3,7 @@ more functions and features will be added as pubg adds more API calls"""
 import json
 import requests
 
-
+import constants
 
 class APIException(Exception):
     """Generic exception class for raising errors"""
@@ -47,10 +47,10 @@ class PUBGAPI:
         and global stats.  Default gamemode is solo
         by Zac: Add parameter game_region to extract player stats by region directly
         """
-        if game_mode not in ['solo', 'duo', 'squad']:
-            raise APIException("game_mode must be one of: solo, duo, squad")
-        if game_region not in ['as', 'na', 'agg', 'sea', 'eu', 'oc', 'sa']:
-            raise APIException("game_region must be one of: as, na, agg, sea, eu, oc, sa")
+        if game_mode not in constants.GAME_MODES:
+            raise APIException("game_mode must be one of: solo, duo, squad, all")
+        if game_region not in constants.GAME_REGIONS:
+            raise APIException("game_region must be one of: as, na, agg, sea, eu, oc, sa, all")
         try:
             url = self.pubg_url + player_handle
             response = requests.request("GET", url, headers=self.headers)
@@ -66,8 +66,8 @@ class PUBGAPI:
     def player_skill(self, player_handle, game_mode='solo'):
         """Returns the current skill rating of the player for a specified gamemode,
         default gamemode is solo"""
-        if game_mode not in ['solo', 'duo', 'squad']:
-            raise APIException("game_mode must be one of: solo, duo, squad")
+        if game_mode not in constants.GAME_MODES:
+            raise APIException("game_mode must be one of: solo, duo, squad, all")
         try:
             url = self.pubg_url + player_handle
             response = requests.request("GET", url, headers=self.headers)
