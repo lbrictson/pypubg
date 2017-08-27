@@ -21,6 +21,13 @@ class PUBGAPI:
             'content-type': "application/json",
             'trn-api-key': api_key,
         }
+
+    def _get_player_profile(self, player_handle):
+        url = self.pubg_url + player_handle
+        response = requests.request("GET", url, headers=self.headers)
+        data = json.loads(response.text)
+        return data
+
     def player(self, player_handle):
         """Returns the full set of data on a player, no filtering"""
         try:
@@ -52,9 +59,7 @@ class PUBGAPI:
         if game_region not in constants.GAME_REGIONS:
             raise APIException("game_region must be one of: as, na, agg, sea, eu, oc, sa, all")
         try:
-            url = self.pubg_url + player_handle
-            response = requests.request("GET", url, headers=self.headers)
-            data = json.loads(response.text)
+            data = self._get_player_profile(player_handle)
             return_data = []
             for stat in data['Stats']:
                 if stat['Match'] == game_mode and stat['Region'] == game_region:
@@ -69,9 +74,7 @@ class PUBGAPI:
         if game_mode not in constants.GAME_MODES:
             raise APIException("game_mode must be one of: solo, duo, squad, all")
         try:
-            url = self.pubg_url + player_handle
-            response = requests.request("GET", url, headers=self.headers)
-            data = json.loads(response.text)
+            data = self._get_player_profile(player_handle)
             player_stats = {}
             return_data = []
             for stat in data['Stats']:
