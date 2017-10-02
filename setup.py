@@ -24,7 +24,7 @@ setup(
     long_description="""The easy way to grab data from the PUBG stat tracker.""",
 
     # The project's main homepage.
-    url='https://github.com/lbrictson/py-pubg',
+    url='https://github.com/lbrictson/pypubg',
 
     # Author details
     author='Luke Brictson',
