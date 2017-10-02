@@ -62,9 +62,9 @@ class PUBGAPI:
         by Zac: Add parameter game_region to extract player stats by region directly
         """
         if game_mode not in constants.GAME_MODES:
-            raise APIException("game_mode must be one of: solo, duo, squad, all")
+            raise APIException("game_mode must be one of: {0}".format(", ".join(constants.GAME_MODES)))
         if game_region not in constants.GAME_REGIONS:
-            raise APIException("game_region must be one of: as, na, agg, sea, eu, oc, sa, all")
+            raise APIException("game_region must be one of: {0}".format(", ".join(constants.GAME_REGIONS)))
         try:
             data = self._get_player_profile(player_handle)
             data = self._filter_gameplay_stats(data, game_mode, game_region)
@@ -123,7 +123,7 @@ class PUBGAPI:
         """Returns the current skill rating of the player for a specified gamemode,
         default gamemode is solo"""
         if game_mode not in constants.GAME_MODES:
-            raise APIException("game_mode must be one of: solo, duo, squad, all")
+            raise APIException("game_mode must be one of: {0}".format(", ".join(constants.GAME_MODES)))
         try:
             data = self._get_player_profile(player_handle)
             player_stats = {}
