@@ -33,6 +33,8 @@ class PUBGAPI:
         url = self.pubg_url + player_handle
         response = requests.request("GET", url, headers=self.headers)
         data = json.loads(response.text)
+        if(data['error'] is not None):
+            raise APIException(data['error'])
         return data
 
     def player(self, player_handle):
